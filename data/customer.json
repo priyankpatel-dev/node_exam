@@ -1,0 +1,22 @@
+[
+  {
+    "_id": "5c8a1d5b0190b214360dc057",
+    "name": "User First",
+    "email": "user@demo.com",
+    "phoneNumber": "9879879879",
+    "gender": "Male",
+    "address": "Address Line1, Address Line2, Street, City, State, Country - 00123.",
+    "photo": "user-1.jpg",
+    "password": "$2a$12$0yURVDBtHHKEoZCn5CFx4u/QXw0hZkISRqE5A1ywwCPICiOUWrBxK"
+  },
+  {
+    "_id": "5c8a1dfa2f8fb814b56fa181",
+    "name": "John Doe",
+    "email": "john@dummy.com",
+    "phoneNumber": "9879879879",
+    "gender": "Male",
+    "address": "Address Line1, Address Line2, Street, City, State, Country - 00123.",
+    "photo": "user-2.jpg",
+    "password": "$2a$12$0yURVDBtHHKEoZCn5CFx4u/QXw0hZkISRqE5A1ywwCPICiOUWrBxK"
+  }
+]
