@@ -6,7 +6,7 @@ class APIHelpers {
 
   filter() {
     const queryObj = { ...this.queryString };
-    const excludedFields = ['page', 'limit', 'fields'];
+    const excludedFields = ['page', 'limit', 'fields', 'search'];
     excludedFields.forEach(el => delete queryObj[el]);
 
     let queryStr = JSON.stringify(queryObj);

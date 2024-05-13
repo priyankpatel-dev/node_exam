@@ -21,6 +21,13 @@ const customerSchema = new mongoose.Schema({
     minlength: 8,
     select: false,
     // validate: [validator.isStrongPassword, 'Password should contain atlease 1 lower character, 1 capital character, 1 number, and 1 symbol.']
+    validate: {
+      validator: function(value) {
+          const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+          return regex.test(value);
+      },
+      message: 'Password should contain at least 1 lowercase character, 1 uppercase character, 1 number, and 1 symbol.'
+    }
   },
   phoneNumber: {
     type: Number,
@@ -85,6 +92,10 @@ customerSchema.methods.correctPassword = async function(
 ) {
   return await bcrypt.compare(candidatePassword, customerPassword);
 };
+
+customerSchema.virtual('photoUrl').get(function() {
+  return 'http://localhost:5000/uploads/' + this.photo;
+});
 
 customerSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
   if (this.passwordChangedAt) {

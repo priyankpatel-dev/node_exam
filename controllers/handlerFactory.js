@@ -67,15 +67,29 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = Model =>
   catchAsync(async (req, res) => {
-    var filter = {};
+    let filter = {};
     if (req.query.search) {
-      var filter = {$or:[{"name":req.query.search},{"email":req.query.search}]}; 
+        const regex = new RegExp('.*' + req.query.search + '.*', 'i');
+        filter = {
+          $or: [
+            { name: regex },
+            { email: regex }
+          ]
+        };
     }
     const features = new APIHelpers(Model.find(filter), req.query)
       .filter()
       .limitFields()
       .paginate();
-    const doc = await features.query;
+      let doc = await features.query;
+      if (Model.schema.virtuals.photoUrl) {
+        doc = doc.map(doc => {
+          return {
+            ...doc.toObject(),
+            photoUrl: doc.photoUrl
+          };
+        });
+      }
     res.status(200).json({
       status: 'success',
       results: doc.length,

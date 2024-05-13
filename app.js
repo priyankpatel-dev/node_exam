@@ -10,18 +10,19 @@ const globalErrorHandler = require('./controllers/errorController');
 const authRouter = require('./routes/authRoutes');
 const customerRouter = require('./routes/customerRoutes');
 var bodyParser = require('body-parser');
-var multer = require('multer');
+// var multer = require('multer');
+const path = require('path');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/")
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname)
-  },
-})
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads/")
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + "-" + file.originalname)
+//   },
+// })
 
-const uploadStorage = multer({ storage: storage })
+// const uploadStorage = multer({ storage: storage })
 
 const app = express();
 
@@ -45,11 +46,12 @@ app.use('/api', limiter);
 app.use(bodyParser.json());
 // exports.uploadUserPhoto = upload.single('image');
 
-app.use(uploadStorage.single('image')); 
+// app.use(uploadStorage.single('image')); 
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 // app.use(cookieParser());
-
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 
